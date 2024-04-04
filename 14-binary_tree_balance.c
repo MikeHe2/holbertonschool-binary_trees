@@ -11,32 +11,39 @@
 */
 int binary_tree_balance(const binary_tree_t *tree)
 {
-    if (tree)
-    return (binary_tree_height(tree->left) - binary_tree_height(tree->right));
+	if (tree)
+	return (binary_tree_height(tree->left) - binary_tree_height(tree->right));
 
-    return (0);
+	return (0);
 }
 
 /**
- * binary_tree_inorder - Function that goes through a binary tree using
- * in-order traversal.
+ * binary_tree_height - Function that measures the size of a binary tree.
  *
- * @tree: Is a pointer to the root node of the tree to traverse.
- * @func: Is a pointer to a function call for each node.
+ * @tree: Is a pointer to the root node of the tree to measure the size.
  *
- * Return: Nothing.
+ * Return: 0 if tree is NULL.
  */
 
-void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int))
+size_t binary_tree_height(const binary_tree_t *tree)
+
 {
-	if (tree == NULL || func == NULL)
+	size_t height_l = 0, height_r = 0;
+
+	if (tree == NULL)
 	{
-		return;
+		return (0);
 	}
 
-	binary_tree_inorder(tree->left, func);
+	if (tree->left == NULL && tree->right == NULL)
+	{
+		return (0);
+	}
 
-	func(tree->n);
+	height_l = binary_tree_height(tree->left);
 
-	binary_tree_inorder(tree->right, func);
+	height_r = binary_tree_height(tree->right);
+
+
+	return ((height_l >= height_r ? height_l : height_r) + 1);
 }
